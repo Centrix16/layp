@@ -2,10 +2,11 @@
 #include <ctype.h>
 
 #define FILENAME "test"
+
 #define SYMB_UNKNOWN 0
 
 typedef struct{
-	char *date;
+	char *data;
 	int layer;
 	int symbol;
 } token;
@@ -25,11 +26,12 @@ void interpret(char *filename) {
 }
 
 void token_init(token *tok) {
-	tok->date = NULL;
+	tok->data = NULL;
 	tok->layer = 1;
 	tok->symbol = SYMB_UNKNOWN;
 }
 
 void pars(FILE *fptr) {
+	
 	return;
 }
