@@ -5,11 +5,11 @@
 #define LEN 256
 
 #define SYMB_UNKNOWN 0
-#define SYMB_ELEMENT 1
-#define SYMB_LAYER 2
-#define SYMB_BRANCH 3
-#define SYMB_TREE 4
-#define SYMB_UNION 5
+#define SYMB_ELEMENT ' '
+#define SYMB_LAYER ';'
+#define SYMB_BRANCH ','
+#define SYMB_TREE '/'
+#define SYMB_UNION '\"'
 
 typedef struct{
 	char *data;
@@ -38,6 +38,8 @@ void token_init(token *tok) {
 }
 
 void pars_file(FILE *fptr) {
-	
-	return;
+	token tok;
+	int c;
+
+
 }
