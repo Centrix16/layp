@@ -11,14 +11,6 @@
 #define SYMB_TREE '/'
 #define SYMB_UNION '\"'
 
-/* typedef struct{
-	char data[LEN];
-	int layer;
-	int branch;
-	int elem;
-	int symbol;
-} token; */
-
 void interpret(char *filename);
 void pars_file(FILE *fptr);
 
@@ -33,14 +25,6 @@ void interpret(char *filename) {
 	fclose(fptr);
 }
 
-/* void token_init(token *tok) {
-	for (int i = 0; i < LEN; i++)
-		tok->data[i] = '\0';
-	tok->layer = 0;
-	tok->branch = 0;
-	tok->symbol = SYMB_UNKNOWN;
-} */
-
 void pars_file(FILE *fptr) {
 	char buf[LEN];
 	int c = 0, i = 0, layer = 0, branch = 0, elem = 0;
@@ -50,29 +34,31 @@ void pars_file(FILE *fptr) {
 		switch (c) {
 			case SYMB_ELEMENT:
 				buf[i++] = '\0';
-				printf("string: %s\n", buf);
+				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
+				elem++;
 				i = 0;
 				break;
 			case SYMB_LAYER:
 				buf[i++] = '\0';
-				printf("string: %s\n", buf);
+				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
+				layer++; branch = 0; elem = 0;
 				i = 0;
 				break;
 			case SYMB_BRANCH:
 				buf[i++] = '\0';
-				printf("string: %s\n", buf);
+				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
+				branch++; elem = 0;
 				i = 0;
 				break;
 			case SYMB_TREE:
 				buf[i++] = '\0';
-				printf("string: %s\n", buf);
+				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
 				i = 0;
 				break;
-			case SYMB_UNION:
+/*			case SYMB_UNION:
 				buf[i++] = '\0';
-				printf("string: %s\n", buf);
 				i = 0;
-				break;
+				break; */
 			default:
 				buf[i++] = c;
 				break;
