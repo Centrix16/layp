@@ -14,6 +14,7 @@
 void interpret(char *filename);
 void pars_file(FILE *fptr);
 void treeBuild(char *data, int layer, int branch, int elem);
+int is_symbol(char c);
 
 int main() {
 	interpret(FILENAME);
@@ -27,11 +28,14 @@ void interpret(char *filename) {
 }
 
 void pars_file(FILE *fptr) {
-	char buf[LEN];
-	int c = 0, i = 0, is_symbol = 1, layer = 0, branch = 0, elem = 0;
+	char buf[LEN] = {'\0'};
+	int c = 0, i = 0, symbol_n = 1, layer = 0, branch = 0, elem = 0;
 
 	c = fgetc(fptr);
 	while (!feof(fptr)) {
+		if (is_symbol(c) && i) {
+			treeBuild(buf, layer, branch, elem);
+		}
 		switch (c) {
 			case SYMB_ELEMENT:
 				elem++;
@@ -47,16 +51,27 @@ void pars_file(FILE *fptr) {
 /*			case SYMB_UNION:
 				break; */
 			default:
-				is_symbol = 0;
+				symbol_n = 0;
 				buf[i++] = c;
 				break;
 		}
-		if (!is_symbol++) {
-			buf[i] = '\0';
-			i = 0;
-			treeBuild(buf, layer, branch, elem);
-		}
+		if (symbol_n++)
+			while(i)
+				buf[--i] = '\0';
+
 		c = fgetc(fptr);
+	}
+}
+
+int is_symbol(char c) {
+	switch(c) {
+		case SYMB_ELEMENT:
+		case SYMB_LAYER:
+		case SYMB_BRANCH:
+		case SYMB_TREE:
+			return 1;
+		default:
+			return 0;
 	}
 }
 
