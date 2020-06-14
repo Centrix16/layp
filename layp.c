@@ -13,6 +13,7 @@
 
 void interpret(char *filename);
 void pars_file(FILE *fptr);
+void treeBuild(char *data, int layer, int branch, int elem);
 
 int main() {
 	interpret(FILENAME);
@@ -27,42 +28,39 @@ void interpret(char *filename) {
 
 void pars_file(FILE *fptr) {
 	char buf[LEN];
-	int c = 0, i = 0, layer = 0, branch = 0, elem = 0;
+	int c = 0, i = 0, is_symbol = 1, layer = 0, branch = 0, elem = 0;
 
 	c = fgetc(fptr);
 	while (!feof(fptr)) {
 		switch (c) {
 			case SYMB_ELEMENT:
-				buf[i++] = '\0';
-				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
 				elem++;
-				i = 0;
 				break;
 			case SYMB_LAYER:
-				buf[i++] = '\0';
-				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
 				layer++; branch = 0; elem = 0;
-				i = 0;
 				break;
 			case SYMB_BRANCH:
-				buf[i++] = '\0';
-				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
 				branch++; elem = 0;
-				i = 0;
 				break;
 			case SYMB_TREE:
-				buf[i++] = '\0';
-				printf("string: %s! c=\'%c\' l=%d b=%d e=%d\n", buf, c, layer, branch, elem);
-				i = 0;
 				break;
 /*			case SYMB_UNION:
-				buf[i++] = '\0';
-				i = 0;
 				break; */
 			default:
+				is_symbol = 0;
 				buf[i++] = c;
 				break;
 		}
+		if (!is_symbol++) {
+			buf[i] = '\0';
+			i = 0;
+			treeBuild(buf, layer, branch, elem);
+		}
 		c = fgetc(fptr);
 	}
+}
+
+void treeBuild(char *data, int layer, int branch, int elem) {
+	printf("sheet: %s, layer=%d, branch=%d, elem=%d\n",
+					data, layer, branch, elem);
 }
