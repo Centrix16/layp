@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <ctype.h>
+#include "tree.h"
 
 #define FILENAME "test"
 #define LEN 256
@@ -17,7 +18,28 @@ void treeBuild(char *data, int layer, int branch, int elem);
 int is_symbol(char c);
 
 int main() {
-	interpret(FILENAME);
+	tree st; // syntax tree
+	tree *st1 = NULL, *st2 = NULL;
+	tree_init(&st);
+
+	tree_set_data(&st, "hello tree!");
+	printf("tree  data: %s\n", st.data);
+
+	tree_set_n(&st, 2);
+	st1 = (tree *)(st.list[0]);
+	st2 = (tree *)(st.list[1]);
+	tree_init(st1);
+	tree_init(st2);
+	tree_set_data(st1, "3.14");
+	tree_set_data(st2, "625");
+	
+	printf("tree1 data: %s\n", st1->data);
+	printf("tree2 data: %s\n", st2->data);
+
+	tree_free(st1);
+	tree_free(st2);
+	tree_free(&st);
+	printf("tree data: %s\n", st.data);
 	return 0;
 }
 
