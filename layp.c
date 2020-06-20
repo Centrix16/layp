@@ -36,10 +36,11 @@ int main() {
 	printf("tree1 data: %s\n", st1->data);
 	printf("tree2 data: %s\n", st2->data);
 
-	tree_free(st1);
-	tree_free(st2);
-	tree_free(&st);
-	printf("tree data: %s\n", st.data);
+	tree_free_data(st1);
+	tree_free_data(st2);
+	tree_free_data(&st);
+
+	tree_free_n(&st);
 	return 0;
 }
 
