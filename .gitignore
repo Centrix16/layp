@@ -1,4 +1,7 @@
+layp
 *.exe
+*.out
 *.stackdump
 *.swp
+*.log
 test
