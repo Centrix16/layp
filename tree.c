@@ -30,4 +30,15 @@ void tree_set_data(tree *tr, char *data) {
 void tree_free(tree *tr) {
 	tr->n = 0;
 	tr->data = NULL;
+	free(tr);
+}
+
+void tree_free_data(tree *tr) {
+	free(tr->data);
+}
+
+void tree_free_n(tree *tr) {
+	for (int i = 0; i < tr->n; i++)
+		free(tr->list[i]);
+	free(tr->list);
 }
